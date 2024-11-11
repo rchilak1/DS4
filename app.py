@@ -29,9 +29,9 @@ def load_data():
     end_index = frankenstein_text.find(end_marker)
     clean_text = frankenstein_text[start_index:end_index].strip()
 
-    # Tokenize the text into sentences
+    # Tokenize the text into sentences with explicit language setting
     from nltk.tokenize import sent_tokenize
-    sentences = sent_tokenize(clean_text)
+    sentences = sent_tokenize(clean_text, language='english')
 
     # Group sentences into chunks
     chunk_size = 3  # Reduced chunk size for finer granularity
