@@ -8,18 +8,24 @@ import requests
 import random
 import nltk
 import os
+import streamlit as st
 
-nltk_data_path = "/tmp/nltk_data"
+# Set NLTK data path to /tmp to ensure write permissions
+nltk_data_path = '/tmp/nltk_data'
 nltk.data.path.append(nltk_data_path)
 
-# Ensure punkt is downloaded in the specified directory
+# Check if 'punkt' is already available, else download
+punkt_path = os.path.join(nltk_data_path, 'tokenizers/punkt')
+if not os.path.exists(punkt_path):
+    st.write("Downloading 'punkt' tokenizer...")
+    nltk.download('punkt', download_dir=nltk_data_path)
+
 try:
     nltk.data.find('tokenizers/punkt')
-    st.write("NLTK 'punkt' tokenizer found.")
+    st.write("NLTK 'punkt' tokenizer is ready.")
 except LookupError:
-    st.write("NLTK 'punkt' tokenizer not found, downloading...")
-    nltk.download('punkt', download_dir=nltk_data_path, quiet=True)
-    st.write("NLTK 'punkt' tokenizer downloaded successfully.")
+    st.write("Error loading NLTK 'punkt' tokenizer.")
+
 
 # Function to load and preprocess the text
 @st.cache_data
