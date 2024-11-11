@@ -4,17 +4,21 @@ from transformers import pipeline
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
-import nltk
 import requests
 import random
+import nltk
+import os
 
-# Ensure 'punkt' is downloaded and provide detailed feedback
+nltk_data_path = "/tmp/nltk_data"
+nltk.data.path.append(nltk_data_path)
+
+# Ensure punkt is downloaded in the specified directory
 try:
     nltk.data.find('tokenizers/punkt')
     st.write("NLTK 'punkt' tokenizer found.")
 except LookupError:
     st.write("NLTK 'punkt' tokenizer not found, downloading...")
-    nltk.download('punkt', quiet=True)  # Download without verbose output
+    nltk.download('punkt', download_dir=nltk_data_path, quiet=True)
     st.write("NLTK 'punkt' tokenizer downloaded successfully.")
 
 # Function to load and preprocess the text
