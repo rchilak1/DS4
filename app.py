@@ -8,7 +8,11 @@ import nltk
 import requests
 import random
 
-nltk.download('punkt')
+# Ensure 'punkt' is downloaded
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
 # Function to load and preprocess the text
 @st.cache_data
